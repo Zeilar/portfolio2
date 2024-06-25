@@ -48,9 +48,14 @@ jobs:
                   docker tag portfolio:latest zeilar/portfolio:latest
                   docker push zeilar/portfolio:latest
 
-            - name: Deploy container
-              env:
-                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+            # Set up SSH agent and add the private key
+            - name: Setup SSH
+              uses: webfactory/ssh-agent@v0.8.1
+              with:
+                  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+            # Copy and run the deployment script on the VPS
+            - name: Deploy Docker Container
               run: |
-                  scp -o StrictHostKeyChecking=no infra/deploy-container.sh root@angelin.dev:/tmp/deploy-container.sh
-                  ssh -o StrictHostKeyChecking=no root@angelin.dev 'bash /tmp/deploy-container.sh'
+                  scp -o StrictHostKeyChecking=no infra/deploy-container.sh root@angelin.dev:/tmp/infra/deploy-container.sh
+                  ssh -o StrictHostKeyChecking=no root@angelin.dev 'bash /tmp/infra/deploy-container.sh'
