@@ -3,6 +3,7 @@ import sendGrid from "@sendgrid/mail";
 import { z } from "zod";
 
 sendGrid.setApiKey(z.string().parse(process.env.NX_SENDGRID_API_KEY));
+console.log("set key to", process.env.NX_SENDGRID_API_KEY);
 
 export async function POST(req: Request) {
 	try {
@@ -14,11 +15,10 @@ export async function POST(req: Request) {
 			})
 			.parse(await req.json());
 		await sendGrid.send({
-			// from: {
-			// 	email: "philip@angelin.dev",
-			// 	name: `${name} <${email}>`,
-			// },
-			from: "philip+@angelin.dev",
+			from: {
+				email: "philip@angelin.dev",
+				name: `${name} <${email}>`,
+			},
 			to: "philip_angelin@hotmail.com",
 			subject: "Hello",
 			html: message,
