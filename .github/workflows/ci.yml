@@ -30,9 +30,6 @@ jobs:
             - run: npm ci
             - uses: nrwl/nx-set-shas@v4
 
-            # Build app
-            - run: npx nx build
-
             # Build Docker image
             - name: Build Docker Image
               run: docker build -t portfolio .

@@ -6,6 +6,8 @@ COPY . .
 
 RUN npm i
 
+RUN npx nx build
+
 FROM node:alpine as main
 
 COPY --from=build /usr/src/app /
