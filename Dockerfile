@@ -10,8 +10,10 @@ RUN npx nx build
 
 FROM node:alpine as main
 
-COPY --from=build /usr/src/app /
+COPY --from=build /usr/src/app /usr/src/app
+
+WORKDIR /usr/src/app
 
 EXPOSE 3000
 
-CMD ["npx", "nx", "start"]
+CMD ["npm", "start"]
