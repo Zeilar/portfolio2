@@ -45,7 +45,8 @@
 		"app/**/*.jsx",
 		".next/types/**/*.ts",
 		"dist/portfolio2/.next/types/**/*.ts",
-		"next-env.d.ts"
+		"next-env.d.ts",
+		"index.d.ts"
 	],
 	"exclude": [
 		"node_modules",
