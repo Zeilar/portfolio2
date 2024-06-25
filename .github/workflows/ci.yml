@@ -32,7 +32,7 @@ jobs:
 
             # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
             # - run: npx nx-cloud record -- echo Hello World
-            - run: npx nx affected -t lint test build
+            - run: npx nx build
 
             # Build Docker image
             - name: Build Docker Image
@@ -51,7 +51,7 @@ jobs:
                   docker tag portfolio:latest zeilar/portfolio:latest
                   docker push zeilar/portfolio:latest
 
-            # Upload /dist folder to VPS
+            # Deploy Docker container
             - name: Upload to VPS
               env:
                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
