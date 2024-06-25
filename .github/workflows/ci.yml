@@ -30,8 +30,7 @@ jobs:
             - run: npm ci
             - uses: nrwl/nx-set-shas@v4
 
-            # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
-            # - run: npx nx-cloud record -- echo Hello World
+            # Build app
             - run: npx nx build
 
             # Build Docker image
