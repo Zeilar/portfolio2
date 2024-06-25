@@ -1,7 +1,6 @@
 import { inter, plusJakartaSans } from "@/styles/fonts";
 import { Providers } from "@/components";
 import type { Metadata } from "next";
-import angelinOgImg from "@/assets/images/angelin-og.png";
 import { getMetadata } from "common";
 
 export default function RootLayout({

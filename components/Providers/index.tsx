@@ -4,10 +4,9 @@ import { ChakraProvider, cookieStorageManager } from "@chakra-ui/react";
 import type { PropsWithChildren } from "react";
 import { theme } from "@/styles/theme";
 import { Navbar, PolygonScatter, Footer } from "@/components";
+import { AppProgressBar } from "next-nprogress-bar";
 
-interface ProvidersProps extends PropsWithChildren {}
-
-export function Providers({ children }: ProvidersProps) {
+export function Providers({ children }: PropsWithChildren) {
 	return (
 		<>
 			<ChakraProvider
@@ -19,6 +18,11 @@ export function Providers({ children }: ProvidersProps) {
 				<Navbar />
 				{children}
 				<Footer />
+				<AppProgressBar
+					color="var(--chakra-colors-accent)"
+					shallowRouting
+					options={{ showSpinner: false }}
+				/>
 			</ChakraProvider>
 		</>
 	);
