@@ -3,7 +3,6 @@
 	"version": "0.0.0",
 	"license": "MIT",
 	"scripts": {
-		"postinstall": "nx theme-types",
 		"dev": "nx dev",
 		"build": "nx build",
 		"start": "nx start",
