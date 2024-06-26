@@ -56,6 +56,7 @@ export default async function Page({ params }: PageProps) {
 				</Flex>
 				<Box display={["block", "none"]}>
 					<NextImage
+						priority
 						src={project.previewImage.url}
 						width={project.previewImage.width}
 						height={project.previewImage.height}
@@ -77,6 +78,7 @@ export default async function Page({ params }: PageProps) {
 			</Box>
 			<Box display={["none", "block"]}>
 				<NextImage
+					priority
 					src={project.previewImage.url}
 					width={project.previewImage.width}
 					height={project.previewImage.height}

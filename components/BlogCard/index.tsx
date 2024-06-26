@@ -86,6 +86,7 @@ export function BlogCard({
 								height={breakpoint?.height}
 								objectFit="cover"
 								alt=""
+								priority
 							/>
 						</Box>
 					)}

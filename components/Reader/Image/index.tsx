@@ -9,5 +9,5 @@ interface Props {
 }
 
 export function Image(props: Props) {
-	return <NextImage objectFit="cover" alt="" {...props} />;
+	return <NextImage objectFit="cover" priority alt="" {...props} />;
 }

@@ -5,7 +5,6 @@ import {
 	Grid,
 	Heading,
 	Link,
-	Tag,
 	Text,
 } from "@chakra-ui/react";
 import NextImage from "next/legacy/image";
@@ -15,12 +14,7 @@ import {
 	UnderlineHeader,
 	ViewAppIcon,
 } from "@/components";
-import {
-	getMetadata,
-	readableDate,
-	getProjects,
-	mapProjectsResponse,
-} from "@/common";
+import { getMetadata, getProjects, mapProjectsResponse } from "@/common";
 import { projectsResponseValidator } from "validators/projectsResponse";
 
 export default async function Page() {
