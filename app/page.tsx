@@ -7,7 +7,7 @@ import {
 } from "@/components";
 import { getMetadata, getProjects, mapProjectsResponse } from "@/common";
 import NextLink from "next/link";
-import { Box, Container, Flex, Grid, Icon, Link, Text } from "@chakra-ui/react";
+import { Box, Container, Flex, Grid, Link, Text } from "@chakra-ui/react";
 import NextImage from "next/legacy/image";
 import avatar from "@/assets/images/avatar.jpg";
 import { projectsResponseValidator } from "validators/projectsResponse";

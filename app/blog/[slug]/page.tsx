@@ -1,7 +1,7 @@
 import { getPost } from "@/common";
 import { Reader, UnderlineHeader } from "@/components";
 import { Container } from "@chakra-ui/react";
-import type { Entry, Post, Asset, PageProps } from "@/types";
+import type { PageProps } from "@/types";
 import { z } from "zod";
 
 export default async function Page({ params }: PageProps) {
