@@ -3,7 +3,7 @@ export const styles = {
 		body: {
 			color: "text",
 			bgColor: "gray.800",
-			minH: "100vh",
+			minH: "100svh",
 			pt: ["calc(75px + var(--chakra-sizes-6))", 200],
 			display: "flex",
 			flexDir: "column",

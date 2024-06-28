@@ -22,6 +22,7 @@ export function Mobile() {
 	return (
 		<Box
 			as="header"
+			display={["block", "none"]}
 			zIndex={50}
 			pos="fixed"
 			transition="0.25s ease-out"
