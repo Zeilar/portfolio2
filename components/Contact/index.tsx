@@ -21,13 +21,14 @@ interface Fields {
 	name: string;
 	email: string;
 	message: string;
+	subject: string;
 }
 
 const MAX_MESSAGE_LENGTH = 500;
 
 export function Contact() {
 	const { handleSubmit, register, formState, watch, reset } = useForm<Fields>(
-		{ defaultValues: { message: "", email: "", name: "" } }
+		{ defaultValues: { message: "", email: "", name: "", subject: "" } }
 	);
 	const toast = useToast();
 
@@ -113,6 +114,32 @@ export function Contact() {
 						</FormErrorMessage>
 					</FormControl>
 				</Flex>
+				<Flex gap={[4, 20]} flexDir={["column", "row"]} mt={[4, 8]}>
+					<FormControl isInvalid={Boolean(formState.errors.subject)}>
+						<FormLabel htmlFor="subject">Subject</FormLabel>
+						<Input
+							size="lg"
+							isRequired
+							variant="filled"
+							id="subject"
+							placeholder="Let's connect"
+							{...register("subject", {
+								required: {
+									message: "Subject is required.",
+									value: true,
+								},
+								maxLength: {
+									message: "Max length is 100 characters.",
+									value: 100,
+								},
+							})}
+						/>
+						<FormErrorMessage color="red.400">
+							{formState.errors.subject?.message}
+						</FormErrorMessage>
+					</FormControl>
+					<Box w="100%" />
+				</Flex>
 				<FormControl
 					mt={[4, 8]}
 					isInvalid={Boolean(formState.errors.message)}
@@ -136,7 +163,7 @@ export function Contact() {
 							},
 						})}
 					/>
-					<Flex alignItems="center">
+					<Flex alignItems="center" mt={1}>
 						<FormErrorMessage mb={2} color="red.400">
 							{formState.errors.message?.message}
 						</FormErrorMessage>
@@ -156,7 +183,6 @@ export function Contact() {
 				<Button
 					type="submit"
 					variant="primary-icon"
-					mt={[0, 8]}
 					isLoading={formState.isSubmitting}
 				>
 					<EmailIcon mr={3} fontSize="xl" />
