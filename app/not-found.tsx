@@ -1,6 +1,7 @@
+"use client";
+
 import { Container, Text } from "@chakra-ui/react";
 import { UnderlineHeader } from "@/components";
-import { getMetadata } from "@/common";
 
 export default function NotFound() {
 	return (
@@ -12,8 +13,3 @@ export default function NotFound() {
 		</Container>
 	);
 }
-
-export const metadata = getMetadata({
-	title: "Angelin | 404",
-	description: "The resource you were looking for could not be found.",
-});

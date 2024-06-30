@@ -1,6 +1,7 @@
+"use client";
+
 import { Container, Text } from "@chakra-ui/react";
 import { UnderlineHeader } from "@/components";
-import { getMetadata } from "@/common";
 
 export default function ServerError() {
 	return (
@@ -10,9 +11,3 @@ export default function ServerError() {
 		</Container>
 	);
 }
-
-export const metadata = getMetadata({
-	title: "Angelin | 500",
-	description:
-		"The server could not respond to your request, I apologize for the inconvenience.",
-});

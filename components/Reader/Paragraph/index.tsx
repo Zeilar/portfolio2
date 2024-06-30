@@ -1,43 +1,25 @@
 "use client";
 
-import type { Entry, RTParagraph } from "../../../types";
-import { CodeBlock } from "../CodeBlock";
+import { z } from "zod";
+import { Text as ChakraText } from "@chakra-ui/react";
 import { HyperLink } from "../HyperLink";
 import { Text } from "../Text";
+import { paragraphValidator } from "@/validators";
 
 interface Props {
-	paragraph: RTParagraph;
-	entries?: Entry[];
+	nodes: z.infer<typeof paragraphValidator>["children"];
 }
 
-export function Paragraph({ paragraph, entries }: Props) {
+export function Paragraph({ nodes }: Props) {
 	return (
-		<>
-			{paragraph.content.map((node, i) => {
-				switch (node.nodeType) {
-					case "text":
-						return <Text key={i} text={node} />;
-					case "hyperlink":
-						return <HyperLink key={i} hyperLink={node} />;
-					case "embedded-entry-inline":
-						if (!entries) {
-							return null;
-						}
-						// eslint-disable-next-line no-case-declarations
-						const codeBlock: Entry | undefined = entries.find(
-							(entry) => entry.sys.id === node.data.target.sys.id
-						);
-						return codeBlock ? (
-							<CodeBlock
-								key={i}
-								code={codeBlock.fields.code}
-								language={codeBlock.fields.language}
-							/>
-						) : null;
-					default:
-						return null;
-				}
-			})}
-		</>
+		<ChakraText mb={2}>
+			{nodes.map((node, i) =>
+				node.type === "link" ? (
+					<HyperLink key={i} node={node} />
+				) : (
+					<Text key={i} node={node} />
+				)
+			)}
+		</ChakraText>
 	);
 }

@@ -4,15 +4,12 @@ import { Box, Container, Flex, Icon, Link } from "@chakra-ui/react";
 import { StyledLink } from "./StyledLink";
 import NextLink from "next/link";
 import { ReactComponent as BrandIcon } from "@/assets/svgs/brand.svg";
-import { Mobile } from "./Mobile";
 
 export function Navbar() {
 	return (
 		<>
-			<Mobile />
 			<Box
 				as="header"
-				display={["none", "block"]}
 				zIndex={50}
 				pos="fixed"
 				top={0}
@@ -37,7 +34,11 @@ export function Navbar() {
 					backdropFilter="blur(5px)"
 				>
 					<Flex as="nav" alignItems="center" h="100%">
-						<Flex as="ul" gap="3.5rem" alignItems="center">
+						<Flex
+							as="ul"
+							gap={["2rem", "3.5rem"]}
+							alignItems="center"
+						>
 							<li>
 								<NextLink legacyBehavior href="/" passHref>
 									<Link
@@ -57,9 +58,6 @@ export function Navbar() {
 								<StyledLink href="/projects">
 									Projects
 								</StyledLink>
-							</li>
-							<li>
-								<StyledLink href="/blog">Blog</StyledLink>
 							</li>
 						</Flex>
 					</Flex>

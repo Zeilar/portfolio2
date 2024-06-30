@@ -32,8 +32,8 @@ jobs:
 
             - name: Build Docker image
               run: |
-                  echo "NX_CONTENTFUL_ACCESS_TOKEN=${{ secrets.NX_CONTENTFUL_ACCESS_TOKEN }}" >> .env
-                  echo "NX_CONTENTFUL_SPACE_ID=${{ secrets.NX_CONTENTFUL_SPACE_ID }}" >> .env
+                  echo "NX_STRAPI_API_URL=${{ secrets.NX_STRAPI_API_URL }}" >> .env
+                  echo "NX_STRAPI_API_KEY=${{ secrets.NX_STRAPI_API_KEY }}" >> .env
                   echo "NX_SENDGRID_API_KEY=${{ secrets.NX_SENDGRID_API_KEY }}" >> .env
                   docker build -t portfolio .
 

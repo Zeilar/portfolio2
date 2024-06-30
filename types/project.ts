@@ -1,3 +1,4 @@
-import { mapProjectsResponse } from "common/helpers";
+import { projectValidator } from "@/validators";
+import { z } from "zod";
 
-export type Project = NonNullable<ReturnType<typeof mapProjectsResponse>[0]>;
+export type Project = z.infer<typeof projectValidator>;

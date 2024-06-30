@@ -1,18 +1,19 @@
 "use client";
 
 import { ListItem as ChakraListItem } from "@chakra-ui/react";
-import type { RTListItem } from "../../../types";
-import { Paragraph } from "../Paragraph";
+import { z } from "zod";
+import { listValidator } from "@/validators";
+import { Text } from "../Text";
 
 interface Props {
-	listItem: RTListItem;
+	node: z.infer<typeof listValidator>["children"][0];
 }
 
-export function ListItem({ listItem }: Props) {
+export function ListItem({ node }: Props) {
 	return (
 		<ChakraListItem>
-			{listItem.content.map((paragraph, i) => (
-				<Paragraph key={i} paragraph={paragraph} />
+			{node.children.map((node, i) => (
+				<Text key={i} node={node} />
 			))}
 		</ChakraListItem>
 	);

@@ -16,11 +16,14 @@ export function CodeBlock({ code, language }: Props) {
 		base: 0,
 		sm: "calc(var(--chakra-sizes-6) * -1)",
 	});
-	const formattedCode = useMemo(() => code.replaceAll("\t", "  "), [code]);
-	const [supportsNavigator, setSupportsNavigator] = useState(false);
+	const formattedCode = useMemo<string>(
+		() => code.replaceAll("\t", "  "),
+		[code]
+	);
+	const [supportsNavigator, setSupportsNavigator] = useState<boolean>(false);
 	const copy = useCallback(() => {
 		navigator.clipboard.writeText(formattedCode);
-	}, []);
+	}, [formattedCode]);
 
 	useEffect(() => {
 		setSupportsNavigator(Boolean(window.navigator));

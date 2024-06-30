@@ -1,120 +1,40 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+const API_TOKEN = process.env.NX_STRAPI_API_KEY;
+const API_URL = `${process.env.NX_STRAPI_API_URL}/api`;
 
-import { Asset } from "../types/asset";
-import { Entry } from "../types/entry";
-import { Post } from "../types/post";
+const DEFAULT_HEADERS = new Headers({ Authorization: `Bearer ${API_TOKEN}` });
 
-const ACCESS_TOKEN = process.env.NX_CONTENTFUL_ACCESS_TOKEN;
-const SPACE_ID = process.env.NX_CONTENTFUL_SPACE_ID;
-
-export function getProject(slug: string) {
-	return () => {
-		const params = new URLSearchParams({
-			content_type: "project",
-			include: "1",
-			"fields.slug": slug,
-		});
-		return fetch(
-			`https://cdn.contentful.com/spaces/${SPACE_ID}/entries?${params}`,
-			{
-				headers: {
-					Authorization: `Bearer ${ACCESS_TOKEN}`,
-				},
-			}
-		);
-	};
-}
-
-export function getProjects(featured = false) {
-	return () => {
-		const params = new URLSearchParams({
-			content_type: "project",
-			include: "1",
-		});
-		if (featured) {
-			params.append("fields.featured", "true");
-		}
-		return fetch(
-			`https://cdn.contentful.com/spaces/${SPACE_ID}/entries?${params}`,
-			{
-				headers: {
-					Authorization: `Bearer ${ACCESS_TOKEN}`,
-				},
-			}
-		);
-	};
-}
-
-export function getTechnologies() {
-	return () => {
-		const params = new URLSearchParams({
-			content_type: "technology",
-			include: "1",
-		});
-		return fetch(
-			`https://cdn.contentful.com/spaces/${SPACE_ID}/entries?${params.toString()}`,
-			{
-				headers: {
-					Authorization: `Bearer ${ACCESS_TOKEN}`,
-				},
-			}
-		);
-	};
-}
-
-export async function getPosts(search = ""): Promise<Post[]> {
-	const params = new URLSearchParams({
-		content_type: "post",
-		include: "1",
-		"fields.title[match]": search,
-	});
+export async function getProject(slug: string): Promise<unknown> {
 	const response = await fetch(
-		`https://cdn.contentful.com/spaces/${SPACE_ID}/entries?${params.toString()}`,
-		{
-			headers: {
-				Authorization: `Bearer ${ACCESS_TOKEN}`,
-			},
-		}
+		`${API_URL}/projects?filters[Slug][$eq]=${slug}&populate=PreviewImage`,
+		{ headers: DEFAULT_HEADERS }
 	);
-	const data = await response.json();
-	return data.items.map((project: any) => {
-		const asset = data.includes.Asset.find(
-			(asset: any) => project.fields.previewImage.sys.id === asset.sys.id
-		);
-		return {
-			...project.fields,
-			previewImage: `https:${asset.fields.file.url}`,
-		};
-	});
+	return response.json();
 }
 
-export async function getPost(slug: string) {
-	const params = new URLSearchParams({
-		content_type: "post",
-		include: "1",
-		"fields.slug[match]": slug,
+export async function getProjects(featured?: boolean): Promise<unknown> {
+	const searchParams = new URLSearchParams({
+		populate: "PreviewImage",
 	});
+	if (featured) {
+		searchParams.set("filters[Featured][$eq]", `${featured}`);
+	}
+	const response = await fetch(`${API_URL}/projects?${searchParams}`, {
+		headers: DEFAULT_HEADERS,
+	});
+	return response.json();
+}
+
+export async function getPosts(): Promise<unknown> {
+	const response = await fetch(`${API_URL}/posts`, {
+		headers: DEFAULT_HEADERS,
+	});
+	return response.json();
+}
+
+export async function getPost(slug: string): Promise<unknown> {
 	const response = await fetch(
-		`https://cdn.contentful.com/spaces/${SPACE_ID}/entries?${params.toString()}`,
-		{
-			headers: {
-				Authorization: `Bearer ${ACCESS_TOKEN}`,
-			},
-		}
+		`${API_URL}/posts?filters[slug][$eq]=${slug}`,
+		{ headers: DEFAULT_HEADERS }
 	);
-	const data = await response.json();
-	const posts: Post[] = data.items.map((project: any) => {
-		const asset = data.includes.Asset.find(
-			(asset: any) => project.fields.previewImage.sys.id === asset.sys.id
-		);
-		return {
-			...project.fields,
-			previewImage: `https:${asset.fields.file.url}`,
-		};
-	});
-	return {
-		post: posts[0],
-		assets: data.includes.Asset as Asset[],
-		entries: data.includes.Entry as Entry[],
-	};
+	return response.json();
 }

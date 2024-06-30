@@ -1,35 +1,35 @@
 "use client";
 
-import { Text as ChakraText } from "@chakra-ui/react";
-import type { RTText } from "../../../types";
+import { Text as ChakraText, TextDecorationProps } from "@chakra-ui/react";
+import { textValidator } from "@/validators";
+import { z } from "zod";
 import { useMemo } from "react";
 
 interface Props {
-	text: RTText;
+	node: z.infer<typeof textValidator>;
 }
 
-export function Text({ text }: Props) {
-	const isItalic = useMemo<boolean>(
-		() => text.marks.some(({ type }) => type === "italic"),
-		[text]
-	);
-	const isBold = useMemo<boolean>(
-		() => text.marks.some(({ type }) => type === "bold"),
-		[text]
-	);
-	const isUnderline = useMemo<boolean>(
-		() => text.marks.some(({ type }) => type === "underline"),
-		[text]
+export function Text({ node }: Props) {
+	const { text, bold, code, italic, underline, strikethrough } = node;
+	const textDecoration = useMemo<TextDecorationProps["textDecor"]>(
+		() =>
+			strikethrough || underline
+				? `${strikethrough ? "line-through" : ""} ${
+						underline ? "underline" : ""
+				  }`
+				: "inherit",
+		[strikethrough, underline]
 	);
 	return (
 		<ChakraText
-			fontStyle={isItalic ? "italic" : "inherit"}
-			textDecor={isUnderline ? "underline" : "inherit"}
-			fontWeight={isBold ? 700 : "inherit"}
+			as={code ? "code" : "span"}
+			fontStyle={italic ? "italic" : "inherit"}
+			textDecor={textDecoration}
+			fontWeight={bold ? 700 : "inherit"}
 			mb={2}
 			_last={{ mb: 0 }}
 		>
-			{text.value}
+			{text}
 		</ChakraText>
 	);
 }

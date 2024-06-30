@@ -21,5 +21,8 @@ export const styles = {
 		"svg, img": {
 			userSelect: "none",
 		},
+		img: {
+			objectFit: "cover",
+		},
 	},
 };

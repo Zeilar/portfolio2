@@ -1,73 +1,35 @@
 "use client";
 
-import { Box } from "@chakra-ui/react";
-import type { Entry, Asset, RTDocument } from "../../types";
-import { BlockQuote } from "./BlockQuote";
 import { Heading } from "./Heading";
-import { Hr } from "./Hr";
-import { Image } from "./Image";
 import { OrderedList } from "./OrderedList";
 import { Paragraph } from "./Paragraph";
 import { UnorderedList } from "./UnorderedList";
+import { z } from "zod";
+import { richTextValidator } from "@/validators";
 
 interface Props {
-	document: RTDocument;
-	assets: Asset[];
-	entries: Entry[];
+	nodes: z.infer<typeof richTextValidator>;
 }
 
-export function Reader({ assets, document, entries }: Props) {
+export function Reader({ nodes }: Props) {
 	return (
-		<Box whiteSpace="break-spaces">
-			{document.content.map((node, i) => {
-				switch (node.nodeType) {
+		<>
+			{nodes.map((node, i) => {
+				switch (node.type) {
 					case "paragraph":
-						return (
-							<Paragraph
-								key={i}
-								paragraph={node}
-								entries={entries}
-							/>
+						return <Paragraph key={i} nodes={node.children} />;
+					case "heading":
+						return <Heading key={i} node={node} />;
+					case "list":
+						return node.format === "ordered" ? (
+							<OrderedList key={i} nodes={node.children} />
+						) : (
+							<UnorderedList key={i} node={node} />
 						);
-					case "heading-1":
-						return <Heading key={i} level={1} heading={node} />;
-					case "heading-2":
-						return <Heading key={i} level={2} heading={node} />;
-					case "heading-3":
-						return <Heading key={i} level={3} heading={node} />;
-					case "heading-4":
-						return <Heading key={i} level={4} heading={node} />;
-					case "heading-5":
-						return <Heading key={i} level={5} heading={node} />;
-					case "heading-6":
-						return <Heading key={i} level={6} heading={node} />;
-					case "unordered-list":
-						return <UnorderedList key={i} unorderedList={node} />;
-					case "ordered-list":
-						return <OrderedList key={i} orderedList={node} />;
-					case "hr":
-						return <Hr key={i} />;
-					case "blockquote":
-						return <BlockQuote key={i} blockQuote={node} />;
-					case "embedded-asset-block":
-						// eslint-disable-next-line no-case-declarations
-						const image: Asset | undefined = assets.find(
-							(asset) => asset.sys.id === node.data.target.sys.id
-						);
-						return image ? (
-							// eslint-disable-next-line jsx-a11y/alt-text
-							<Image
-								key={i}
-								src={`https:${image.fields.file.url}`}
-								height={image.fields.file.details.image.height}
-								width={image.fields.file.details.image.width}
-							/>
-						) : null;
-					case "embedded-entry-inline":
 					default:
 						return null;
 				}
 			})}
-		</Box>
+		</>
 	);
 }

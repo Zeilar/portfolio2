@@ -1,18 +1,22 @@
 "use client";
 
-import { Flex, Heading, Link, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Link } from "@chakra-ui/react";
 import type { Project } from "@/types";
-import NextImage from "next/legacy/image";
+import NextImage from "next/image";
 import NextLink from "next/link";
-import { readableDate } from "@/common";
+import { useConfig } from "@/hooks";
+import { Reader } from "..";
 
 interface Props {
 	project: Project;
 }
 
 export function FeaturedProject({ project }: Props) {
+	const { apiUrl } = useConfig();
+	const { Slug, Title, Description, PreviewImage } = project.attributes;
+	const image = PreviewImage.data.attributes.formats.small;
 	return (
-		<NextLink legacyBehavior passHref href={`/projects/${project.slug}`}>
+		<NextLink legacyBehavior passHref href={`/projects/${Slug}`}>
 			<Link
 				color="text"
 				display="flex"
@@ -27,27 +31,19 @@ export function FeaturedProject({ project }: Props) {
 			>
 				<Flex h={300} overflow="hidden" justifyContent="center">
 					<NextImage
-						src={project.previewImage.url}
-						width={project.previewImage.width}
-						height={project.previewImage.height}
-						priority
-						objectFit="cover"
-						alt=""
+						src={`${apiUrl}${image.url}`}
+						width={image.width}
+						height={image.height}
+						alt={PreviewImage.data.attributes.alternativeText ?? ""}
 					/>
 				</Flex>
 				<Flex p={10} flexDir="column">
 					<Heading fontWeight={500} size="xl" noOfLines={1} mb={2}>
-						{project.title}
+						{Title}
 					</Heading>
-					<Text
-						fontSize="sm"
-						color="gray.200"
-						lineHeight="6"
-						mt={4}
-						noOfLines={8}
-					>
-						{project.description}
-					</Text>
+					<Box color="gray.200" mt={4} noOfLines={[4, 8]}>
+						<Reader nodes={Description} />
+					</Box>
 				</Flex>
 			</Link>
 		</NextLink>

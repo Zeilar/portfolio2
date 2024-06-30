@@ -35,7 +35,9 @@ export default function RootLayout({
 			<link rel="manifest" href="/site.webmanifest" />
 			<title>Angelin</title>
 			<body>
-				<Providers>{children}</Providers>
+				<Providers apiUrl={process.env.NX_STRAPI_API_URL}>
+					{children}
+				</Providers>
 			</body>
 		</html>
 	);

@@ -6,7 +6,9 @@
 			"@/assets/*": ["assets/*"],
 			"@/types": ["types/index.ts"],
 			"@/common": ["common/index.ts"],
-			"@/validators": ["validators/index.ts"]
+			"@/validators": ["validators/index.ts"],
+			"@/hooks": ["hooks/index.ts"],
+			"@/contexts": ["contexts/index.ts"]
 		},
 		"rootDir": ".",
 		"sourceMap": true,
@@ -46,7 +48,8 @@
 		".next/types/**/*.ts",
 		"dist/portfolio2/.next/types/**/*.ts",
 		"next-env.d.ts",
-		"index.d.ts"
+		"index.d.ts",
+		"types/env.d.ts"
 	],
 	"exclude": [
 		"node_modules",

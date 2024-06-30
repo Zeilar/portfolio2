@@ -1,16 +1,16 @@
 "use client";
 
-import { Box, Heading, type TextProps } from "@chakra-ui/react";
+import { Box, Heading, type HeadingProps } from "@chakra-ui/react";
 
 interface Props {
 	label: React.ReactNode;
-	labelProps?: TextProps;
+	labelProps?: HeadingProps;
 }
 
 export function UnderlineHeader({ label, labelProps }: Props) {
 	return (
-		<Box w="fit-content" fontSize={["2xl", "5xl"]} mb="1em">
-			<Heading size={["2xl", "5xl"]} fontWeight={500} {...labelProps}>
+		<Box w="fit-content" fontSize={["xl", "5xl"]} mb="1em">
+			<Heading size={["xl", "5xl"]} fontWeight={500} {...labelProps}>
 				{label}
 			</Heading>
 			<Box

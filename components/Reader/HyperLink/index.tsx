@@ -1,24 +1,25 @@
 "use client";
 
 import { Link } from "@chakra-ui/react";
-import type { RTHyperLink } from "../../../types";
 import { Text } from "../Text";
+import { z } from "zod";
+import { hyperLinkValidator } from "@/validators";
 
 interface Props {
-	hyperLink: RTHyperLink;
+	node: z.infer<typeof hyperLinkValidator>;
 }
 
-export function HyperLink({ hyperLink }: Props) {
+export function HyperLink({ node }: Props) {
 	return (
 		<Link
 			isExternal
-			href={hyperLink.data.uri}
+			href={node.url}
 			display="inline-flex"
 			w="fit-content"
 			color="purple.300"
 		>
-			{hyperLink.content.map((text, i) => (
-				<Text key={i} text={text} />
+			{node.children.map((node, i) => (
+				<Text key={i} node={node} />
 			))}
 		</Link>
 	);

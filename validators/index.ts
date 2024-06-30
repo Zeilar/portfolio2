@@ -1,3 +1,3 @@
-export * from "./projectsResponse";
-export * from "./contentful";
-export * from "./entry";
+export * from "./project";
+export * from "./strapi";
+export * from "./rich-text";

@@ -16,7 +16,6 @@ export function ProjectNavigation({ url }: Props) {
 			gap={[4, 2]}
 			alignItems={["unset", "flex-start"]}
 			flexDir={["column", "row"]}
-			mb={[8, 0]}
 		>
 			<Button variant="secondary-icon" onClick={back}>
 				<ArrowBackIcon mr={3} fontSize="xl" />

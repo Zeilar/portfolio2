@@ -1,18 +1,19 @@
 "use client";
 
-import type { RTUnorderedList } from "../../../types";
 import { UnorderedList as ChakraUnorderedList } from "@chakra-ui/react";
 import { ListItem } from "../ListItem";
+import { z } from "zod";
+import { listValidator } from "@/validators";
 
 interface Props {
-	unorderedList: RTUnorderedList;
+	node: z.infer<typeof listValidator>;
 }
 
-export function UnorderedList({ unorderedList }: Props) {
+export function UnorderedList({ node }: Props) {
 	return (
 		<ChakraUnorderedList>
-			{unorderedList.content.map((listItem, i) => (
-				<ListItem key={i} listItem={listItem} />
+			{node.children.map((node, i) => (
+				<ListItem key={i} node={node} />
 			))}
 		</ChakraUnorderedList>
 	);

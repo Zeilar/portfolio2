@@ -1,17 +1,16 @@
 import {
-	AllProjectsButton,
 	BigBrandIcon,
 	ExploreProjectsButton,
 	FeaturedProject,
 	UnderlineHeader,
 } from "@/components";
-import { getMetadata, getProjects, mapProjectsResponse } from "@/common";
-import NextLink from "next/link";
+import { getMetadata, getProjects } from "@/common";
 import { Box, Container, Flex, Grid, Link, Text } from "@chakra-ui/react";
-import NextImage from "next/legacy/image";
+import NextImage from "next/image";
 import avatar from "@/assets/images/avatar.jpg";
-import { projectsResponseValidator } from "validators/projectsResponse";
 import dynamic from "next/dynamic";
+import { responseValidator, projectValidator } from "@/validators";
+import { z } from "zod";
 
 const Contact = dynamic(
 	() => import("../components/Contact").then((module) => module.Contact),
@@ -19,12 +18,8 @@ const Contact = dynamic(
 );
 
 export default async function Page() {
-	const fetcher = getProjects(true);
-	const response = await fetcher();
-	const data = await response.json();
-	const featuredProjects = mapProjectsResponse(
-		projectsResponseValidator.parse(data)
-	);
+	const { data } = responseValidator.parse(await getProjects(true));
+	const featuredProjects = z.array(projectValidator).parse(data);
 	return (
 		<>
 			<Container as="section" maxW="container.xl">
@@ -35,11 +30,6 @@ export default async function Page() {
 				>
 					<Box>
 						<UnderlineHeader
-							labelProps={{
-								fontSize: ["4xl", "6xl"],
-								lineHeight: 1.25,
-								mb: [5, 10],
-							}}
 							label={
 								<>
 									Idea in,
@@ -63,9 +53,6 @@ export default async function Page() {
 			<Container as="section" maxW="container.xl" py={[6, "5rem"]}>
 				<Flex justifyContent="space-between">
 					<UnderlineHeader label="Featured Projects" />
-					<Box display={["none", "block"]}>
-						<AllProjectsButton />
-					</Box>
 				</Flex>
 				<Grid
 					gridGap={8}
@@ -75,14 +62,11 @@ export default async function Page() {
 						(featuredProject) =>
 							featuredProject && (
 								<FeaturedProject
-									key={featuredProject.url}
+									key={featuredProject.id}
 									project={featuredProject}
 								/>
 							)
 					)}
-					<Box display={["block", "none"]}>
-						<AllProjectsButton />
-					</Box>
 				</Grid>
 			</Container>
 			<Box as="section" bgColor="gray.700" py={[6, "5rem"]}>
@@ -95,22 +79,19 @@ export default async function Page() {
 								blurDataURL={avatar.blurDataURL}
 								width={200}
 								height={200}
-								objectFit="cover"
 								alt=""
-								priority
 							/>
 						</Flex>
 						<Text color="gray.200" maxW={["auto", "50%"]}>
 							My journey as a developer started in high school
 							where I studied game development, where we coded
 							primarily in C# and the framework&nbsp;
-							<NextLink
-								legacyBehavior
-								passHref
+							<Link
 								href="https://www.microsoft.com/en-us/download/details.aspx?id=23714"
+								isExternal
 							>
-								<Link isExternal>XNA</Link>
-							</NextLink>
+								XNA
+							</Link>
 							. I migrated towards web development instead and
 							after two 2-year educations which included a lot of
 							internship, I was more than ready to become a
@@ -120,13 +101,12 @@ export default async function Page() {
 							Most of my spare time goes towards the computer. Be
 							it programming, gaming or watching videos. You may
 							call me a <i>supernerd</i>. Shoutout to&nbsp;
-							<NextLink
-								legacyBehavior
-								passHref
+							<Link
 								href="https://www.coffeestainstudios.com/"
+								isExternal
 							>
-								<Link isExternal>Coffe Stain Studios</Link>
-							</NextLink>
+								Coffe Stain Studios
+							</Link>
 							.
 						</Text>
 					</Flex>

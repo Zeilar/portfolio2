@@ -11,11 +11,16 @@ const nextConfig = {
 	images: {
 		remotePatterns: [
 			{
+				protocol: "http",
+				hostname: "localhost",
+			},
+			{
 				protocol: "https",
-				hostname: "images.ctfassets.net",
+				hostname: "portfolio-api.angelin.dev",
 			},
 		],
 	},
+	experimental: { instrumentationHook: true },
 };
 
 const plugins = [withNx];
