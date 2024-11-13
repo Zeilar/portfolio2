@@ -49,6 +49,11 @@ export function Navbar() {
               <li>
                 <StyledLink href="/projects">Projects</StyledLink>
               </li>
+              <li>
+                <StyledLink href="/cv.pdf" target="_blank" rel="noreferrer">
+                  CV
+                </StyledLink>
+              </li>
             </Flex>
           </Flex>
         </Container>

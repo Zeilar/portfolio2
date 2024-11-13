@@ -1,10 +1,10 @@
 "use client";
 
-import { Link } from "@chakra-ui/react";
+import { Link, type LinkProps } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 
-interface Props {
+interface Props extends LinkProps {
   href: string;
   children: React.ReactNode;
 }
