@@ -13,9 +13,8 @@ export function PolygonScatter({ position }: Props) {
     <Box
       pos="absolute"
       bottom={0}
-      h="150%"
+      h="100%"
       w={200}
-      zIndex={-1}
       bgRepeat="repeat-y"
       left={position === "left" ? 0 : undefined}
       right={position === "right" ? 0 : undefined}

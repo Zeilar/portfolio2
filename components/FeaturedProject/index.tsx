@@ -29,14 +29,14 @@ export function FeaturedProject({ project }: Props) {
         whiteSpace="break-spaces"
         _hover={{ transform: "scale(1.03)", bgColor: "gray.600" }}
       >
-        <Flex h={300} overflow="hidden" justifyContent="center">
+        <Box width={500} height={281}>
           <NextImage
             src={`${apiUrl}${image.url}`}
-            width={image.width}
-            height={image.height}
+            width={500}
+            height={281}
             alt={PreviewImage.data.attributes.alternativeText ?? ""}
           />
-        </Flex>
+        </Box>
         <Flex p={10} flexDir="column">
           <Heading fontWeight={500} size="xl" noOfLines={1} mb={2}>
             {Title}
