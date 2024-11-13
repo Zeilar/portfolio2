@@ -33,7 +33,6 @@ export default function RootLayout({
       />
       <link rel="icon" type="image/x-icon" href="/favicon.ico" />
       <link rel="manifest" href="/site.webmanifest" />
-      <title>Angelin</title>
       <body>
         <Providers apiUrl={process.env.NX_STRAPI_API_URL}>{children}</Providers>
       </body>
