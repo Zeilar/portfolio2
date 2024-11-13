@@ -1,16 +1,16 @@
 {
-	"name": "portfolio2",
-	"$schema": "node_modules/nx/schemas/project-schema.json",
-	"sourceRoot": ".",
-	"projectType": "application",
-	"tags": [],
-	"// targets": "to see all targets run: nx show project portfolio2 --web",
-	"targets": {
-		"theme-types": {
-			"executor": "nx:run-commands",
-			"options": {
-				"command": "chakra-cli tokens styles/theme/index.ts"
-			}
-		}
-	}
+  "name": "portfolio2",
+  "$schema": "node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": ".",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project portfolio2 --web",
+  "targets": {
+    "theme-types": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "chakra-cli tokens styles/theme/index.ts"
+      }
+    }
+  }
 }

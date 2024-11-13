@@ -1,63 +1,63 @@
 name: CI
 
 on:
-    push:
-        branches:
-            - main
-    pull_request:
+  push:
+    branches:
+      - main
+  pull_request:
 
 permissions:
-    actions: read
-    contents: read
+  actions: read
+  contents: read
 
 jobs:
-    main:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
-            - run: npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="build"
+      # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
+      - run: npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="build"
 
-            # Cache node_modules
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: 20
-                  cache: "npm"
+      # Cache node_modules
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: "npm"
 
-            - run: npm ci
-            - uses: nrwl/nx-set-shas@v4
+      - run: npm ci
+      - uses: nrwl/nx-set-shas@v4
 
-            - name: Build Docker image
-              run: |
-                  echo "NX_STRAPI_API_URL=${{ secrets.NX_STRAPI_API_URL }}" >> .env
-                  echo "NX_STRAPI_API_KEY=${{ secrets.NX_STRAPI_API_KEY }}" >> .env
-                  echo "NX_SENDGRID_API_KEY=${{ secrets.NX_SENDGRID_API_KEY }}" >> .env
-                  docker build -t portfolio .
+      - name: Build Docker image
+        run: |
+          echo "NX_STRAPI_API_URL=${{ secrets.NX_STRAPI_API_URL }}" >> .env
+          echo "NX_STRAPI_API_KEY=${{ secrets.NX_STRAPI_API_KEY }}" >> .env
+          echo "NX_SENDGRID_API_KEY=${{ secrets.NX_SENDGRID_API_KEY }}" >> .env
+          docker build -t portfolio .
 
-            - name: Log in to Docker Hub
-              uses: docker/login-action@v2
-              with:
-                  username: ${{ secrets.DOCKER_USERNAME }}
-                  password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-            - name: Push Docker image
-              run: |
-                  docker tag portfolio:latest zeilar/portfolio:latest
-                  docker push zeilar/portfolio:latest
+      - name: Push Docker image
+        run: |
+          docker tag portfolio:latest zeilar/portfolio:latest
+          docker push zeilar/portfolio:latest
 
-            - name: Deploy container
-              env:
-                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-              run: |
-                  mkdir -p ~/.ssh
-                  echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-                  chmod 600 ~/.ssh/id_rsa
-                  ssh -o StrictHostKeyChecking=no root@angelin.dev << 'EOF'
-                    docker pull zeilar/portfolio:latest
-                    docker stop portfolio || true
-                    docker rm portfolio || true
-                    docker run -d --name portfolio -p 3000:3000 zeilar/portfolio:latest
-                  EOF
+      - name: Deploy container
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh -o StrictHostKeyChecking=no root@angelin.dev << 'EOF'
+            docker pull zeilar/portfolio:latest
+            docker stop portfolio || true
+            docker rm portfolio || true
+            docker run -d --name portfolio -p 3000:3000 zeilar/portfolio:latest
+          EOF

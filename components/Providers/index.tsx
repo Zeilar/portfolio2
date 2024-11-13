@@ -8,29 +8,26 @@ import { AppProgressBar } from "next-nprogress-bar";
 import { ConfigProvider } from "@/contexts";
 
 interface Props extends PropsWithChildren {
-	apiUrl: string;
+  apiUrl: string;
 }
 
 export function Providers({ children, apiUrl }: Props) {
-	return (
-		<>
-			<ChakraProvider
-				colorModeManager={cookieStorageManager}
-				theme={theme}
-			>
-				<PolygonScatter position="left" />
-				<PolygonScatter position="right" />
-				<ConfigProvider apiUrl={apiUrl}>
-					<Navbar />
-					{children}
-					<Footer />
-				</ConfigProvider>
-				<AppProgressBar
-					color="var(--chakra-colors-accent)"
-					shallowRouting
-					options={{ showSpinner: false }}
-				/>
-			</ChakraProvider>
-		</>
-	);
+  return (
+    <>
+      <ChakraProvider colorModeManager={cookieStorageManager} theme={theme}>
+        <PolygonScatter position="left" />
+        <PolygonScatter position="right" />
+        <ConfigProvider apiUrl={apiUrl}>
+          <Navbar />
+          {children}
+          <Footer />
+        </ConfigProvider>
+        <AppProgressBar
+          color="var(--chakra-colors-accent)"
+          shallowRouting
+          options={{ showSpinner: false }}
+        />
+      </ChakraProvider>
+    </>
+  );
 }

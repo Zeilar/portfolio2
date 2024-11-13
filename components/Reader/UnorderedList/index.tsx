@@ -6,15 +6,15 @@ import { z } from "zod";
 import { listValidator } from "@/validators";
 
 interface Props {
-	node: z.infer<typeof listValidator>;
+  node: z.infer<typeof listValidator>;
 }
 
 export function UnorderedList({ node }: Props) {
-	return (
-		<ChakraUnorderedList>
-			{node.children.map((node, i) => (
-				<ListItem key={i} node={node} />
-			))}
-		</ChakraUnorderedList>
-	);
+  return (
+    <ChakraUnorderedList>
+      {node.children.map((node, i) => (
+        <ListItem key={i} node={node} />
+      ))}
+    </ChakraUnorderedList>
+  );
 }

@@ -3,6 +3,6 @@ import { ConfigContext, type ConfigContextValues } from "@/contexts";
 import { z } from "zod";
 
 export const useConfig = (): ConfigContextValues => {
-	const context = useContext(ConfigContext);
-	return z.object({ apiUrl: z.string().min(1) }).parse(context);
+  const context = useContext(ConfigContext);
+  return z.object({ apiUrl: z.string().min(1) }).parse(context);
 };

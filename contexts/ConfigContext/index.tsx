@@ -3,26 +3,24 @@
 import { type PropsWithChildren, createContext, useMemo } from "react";
 
 export interface ConfigContextValues {
-	apiUrl: string;
+  apiUrl: string;
 }
 
 interface ConfigContextProviderProps extends PropsWithChildren {
-	apiUrl: string;
+  apiUrl: string;
 }
 
 export const ConfigContext = createContext<ConfigContextValues | undefined>(
-	undefined
+  undefined
 );
 
 export function ConfigProvider({
-	apiUrl,
-	children,
+  apiUrl,
+  children,
 }: ConfigContextProviderProps) {
-	const values = useMemo<ConfigContextValues>(() => ({ apiUrl }), [apiUrl]);
+  const values = useMemo<ConfigContextValues>(() => ({ apiUrl }), [apiUrl]);
 
-	return (
-		<ConfigContext.Provider value={values}>
-			{children}
-		</ConfigContext.Provider>
-	);
+  return (
+    <ConfigContext.Provider value={values}>{children}</ConfigContext.Provider>
+  );
 }

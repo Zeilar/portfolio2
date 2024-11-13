@@ -6,21 +6,21 @@ import { z } from "zod";
 import { hyperLinkValidator } from "@/validators";
 
 interface Props {
-	node: z.infer<typeof hyperLinkValidator>;
+  node: z.infer<typeof hyperLinkValidator>;
 }
 
 export function HyperLink({ node }: Props) {
-	return (
-		<Link
-			isExternal
-			href={node.url}
-			display="inline-flex"
-			w="fit-content"
-			color="purple.300"
-		>
-			{node.children.map((node, i) => (
-				<Text key={i} node={node} />
-			))}
-		</Link>
-	);
+  return (
+    <Link
+      isExternal
+      href={node.url}
+      display="inline-flex"
+      w="fit-content"
+      color="purple.300"
+    >
+      {node.children.map((node, i) => (
+        <Text key={i} node={node} />
+      ))}
+    </Link>
+  );
 }

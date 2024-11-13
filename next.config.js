@@ -7,20 +7,20 @@ const { composePlugins, withNx } = require("@nx/next");
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
-	nx: { svgr: true },
-	images: {
-		remotePatterns: [
-			{
-				protocol: "http",
-				hostname: "localhost",
-			},
-			{
-				protocol: "https",
-				hostname: "portfolio-api.angelin.dev",
-			},
-		],
-	},
-	experimental: { instrumentationHook: true },
+  nx: { svgr: true },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
+      {
+        protocol: "https",
+        hostname: "portfolio-api.angelin.dev",
+      },
+    ],
+  },
+  experimental: { instrumentationHook: true },
 };
 
 const plugins = [withNx];
